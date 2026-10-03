@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <title>ClimaSync - Login</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="login.css">
+    </head>
+    <body>
+        <main class="log">
+            <section class="fundo" role="img" aria-label="Estação meteorológica em uma lavoura ao pôr do sol">
+                <h1 class="textoimg">ClimaSync: decisões inteligentes baseadas no clima e no solo</h1>
+            </section>
+
+            <section class="side">
+                <div class="login-card">
+                    <div class="logo-mobile">ClimaSync</div>
+                    <h2>Bem-vindo de volta</h2>
+                    <p class="subtitulo">Insira suas credenciais para gerenciar sua estação</p>
+
+                    <form id="login" novalidate>
+                        <div class="campo">
+                        <div class="campo-topo"><label for="email">E-mail profissional</label></div>
+                        <div class="input-caixa" id="emailBox">
+                            <i class="bi bi-envelope" aria-hidden="true"></i>
+                            <input id="email" type="email" autocomplete="email" placeholder="nome@empresa.com.br" required>
+                        </div>
+                        <p class="erro" id="emailErr">Informe um e-mail válido.</p>
+                        </div>
+
+                        <div class="campo">
+                        <div class="campo-topo">
+                            <label for="senha">Senha</label>
+                            <a class="link-esqueci" href="#">Esqueceu a senha?</a>
+                        </div>
+                        <div class="input-caixa" id="senhaBox">
+                            <i class="bi bi-lock" aria-hidden="true"></i>
+                            <input id="senha" type="password" autocomplete="current-password" placeholder="Sua senha" minlength="6" required>
+                            <button class="botao-olho" type="button" id="toggle" aria-label="Mostrar senha" aria-pressed="false">
+                            <i class="bi bi-eye" id="iconeOlho" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <p class="erro" id="senhaErr">A senha deve ter pelo menos 6 caracteres.</p>
+                        </div>
+
+                        <button class="botao botao-principal" type="submit" id="submit">Acessar Painel</button>
+                    </form>
+
+                    <div class="divisor">ou acesse com</div>
+                    <button class="botao botao-google" type="button" id="google">
+                        <i class="bi bi-google" aria-hidden="true"></i>
+                        Continuar com o Google
+                    </button>
+
+                    <p class="cadastro">Não possui uma conta? <a href="#">Solicitar acesso à gerência</a></p>
+                    <div class="mensagem" id="toast" role="status" aria-live="polite"></div>
+                </div>
+            </section>
+        </main>
+    <script src="login.js"></script>
+    </body>
+</html>
