@@ -1,21 +1,18 @@
-// ===== SUPABASE =====
 const db = window.supabase.createClient(
   'https://ygkvynojfoejztrlsujf.supabase.co',
   'sb_publishable_HDorc-migsMoX-S4nNarkQ_t_aej_3K'
 );
 
-// ===== 1. PROTEGER A PÁGINA E MOSTRAR O USUÁRIO =====
 (async () => {
   const { data: { session } } = await db.auth.getSession();
 
-  // Sem login? Volta para a tela de login
   if (!session) {
     window.location.href = 'login.html';
     return;
   }
 
   const usuario = session.user;
-  const dados = usuario.user_metadata || {};   // o Google envia nome e foto aqui
+  const dados = usuario.user_metadata || {};   
   const nome = dados.full_name || usuario.email;
 
   document.getElementById('usuarioNome').textContent = nome;
@@ -25,19 +22,16 @@ const db = window.supabase.createClient(
     avatar.style.backgroundImage = `url("${dados.avatar_url}")`;
     avatar.textContent = '';
   } else {
-    avatar.textContent = nome.charAt(0).toUpperCase();   // inicial do nome
+    avatar.textContent = nome.charAt(0).toUpperCase();   
   }
 })();
 
-// ===== 2. BOTÃO SAIR =====
 document.getElementById('sair').addEventListener('click', async () => {
   await db.auth.signOut();
   window.location.href = 'login.html';
 });
 
-// ===== 3. GRÁFICO =====
-// Troque estes números pelos dados reais quando tiver o back-end.
-// Cada linha usa a própria escala, por isso as duas aparecem juntas.
+
 const temperaturaAr = [23.5, 25.0, 24.2, 29.8, 27.4];
 const umidadeSolo   = [38.0, 39.5, 42.5, 38.5, 42.8];
 
@@ -68,14 +62,9 @@ function desenharGrafico() {
 
 desenharGrafico();
 
-// ===== 4. PREVISÃO DO TEMPO =====
-// Coordenadas da sua estação/fazenda.
-// Para achar: no Google Maps, clique com o botão direito no local e copie os números.
-// (Estes são só um exemplo: Brasília)
-const LATITUDE = -18.58;
-const LONGITUDE = -46.52;
+const LATITUDE = -18.456081409042635;
+const LONGITUDE = -46.3682270038666;
 
-// Converte o código do tempo (padrão WMO) em um ícone
 function iconePorCodigo(codigo) {
   if (codigo <= 1) return 'bi-sun';
   if (codigo === 2) return 'bi-cloud-sun';
