@@ -156,6 +156,10 @@ label {
   color: var(--erro);
 }
 
+.mensagem.com-erro {
+  color: var(--erro);
+}
+
 .invalido + .erro {
   display: block;
 }

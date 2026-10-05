@@ -3,7 +3,37 @@ const db = window.supabase.createClient(
   'sb_publishable_HDorc-migsMoX-S4nNarkQ_t_aej_3K'
 );
 
+const MODO_TESTE = true;
+
 (async () => {
+  const { data: { session } } = await db.auth.getSession();
+
+  if (!session) {
+    if (!MODO_TESTE) {
+      window.location.href = 'login.html';
+      return;
+    }
+    document.getElementById('usuarioNome').textContent = 'Visitante (teste)';
+    document.getElementById('usuarioFoto').textContent = 'V';
+    return;
+  }
+
+  const usuario = session.user;
+  const dados = usuario.user_metadata || {};
+  const nome = dados.full_name || usuario.email;
+
+  document.getElementById('usuarioNome').textContent = nome;
+
+  const avatar = document.getElementById('usuarioFoto');
+  if (dados.avatar_url) {
+    avatar.style.backgroundImage = `url("${dados.avatar_url}")`;
+    avatar.textContent = '';
+  } else {
+    avatar.textContent = nome.charAt(0).toUpperCase();
+  }
+})();
+
+/*(async () => {
   const { data: { session } } = await db.auth.getSession();
 
   if (!session) {
@@ -24,7 +54,7 @@ const db = window.supabase.createClient(
   } else {
     avatar.textContent = nome.charAt(0).toUpperCase();   
   }
-})();
+})();*/
 
 document.getElementById('sair').addEventListener('click', async () => {
   await db.auth.signOut();

@@ -45,11 +45,12 @@ $('login').addEventListener('submit', async e => {
   btn.textContent = 'Acessar Painel';
 
   if (error) {
-    toast.textContent = 'E-mail ou senha incorretos.';
+  console.log('Erro do Supabase:', error.message);
+  toast.textContent = error.message;
   } else {
     window.location.href = 'painel.html';
   }
-});
+  });
 
 $('google').addEventListener('click', async () => {
   const { error } = await db.auth.signInWithOAuth({
@@ -61,3 +62,11 @@ $('google').addEventListener('click', async () => {
 
   if (error) toast.textContent = 'Erro ao entrar com Google: ' + error.message;
 });
+
+const parametros = new URLSearchParams(window.location.hash.slice(1) || window.location.search);
+const erroNaUrl = parametros.get('error_description');
+
+if (erroNaUrl) {
+  toast.textContent = erroNaUrl;
+  toast.classList.add('com-erro');
+}
