@@ -112,3 +112,5 @@ async function carregarPrevisao() {
 }
 
 carregarPrevisao();
+
+setInterval(carregarPrevisao, 30 * 60 * 1000);
