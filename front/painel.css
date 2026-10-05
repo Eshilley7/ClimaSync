@@ -1,0 +1,345 @@
+:root {
+  --fundo: #0a0f1c;
+  --menu: #0f1729;
+  --caixa: #111a2e;
+  --borda: #1b2740;
+  --texto: #f2f5fa;
+  --texto-suave: #8a96ad;
+  --verde: #10b981;
+  --azul: #38bdf8;
+  --ambar: #f59e0b;
+}
+
+* { 
+    box-sizing: border-box; 
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: 'Lucida Sans', 'Lucida Grande', Verdana, sans-serif;
+}
+
+h1, h2, h3, h4, p { 
+    margin: 0; 
+}
+
+a { 
+    text-decoration: none; color: inherit; 
+}
+
+.verde { 
+    color: var(--verde); 
+}
+
+.azul  { 
+    color: var(--azul); 
+}
+
+.ambar { 
+    color: var(--ambar); 
+}
+
+.suave { 
+    color: var(--texto-suave); font-size: 11px; margin-top: 4px; 
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+.menu {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 16px;
+  background: var(--menu);
+  border-right: 1px solid var(--borda);
+}
+
+.marca { 
+    padding: 0 8px 28px; 
+}
+.marca strong { 
+    display: block; font-size: 16px; 
+}
+.marca span { 
+    font-size: 10px; color: var(--texto-suave); 
+}
+
+nav { 
+    display: flex; flex-direction: column; gap: 6px; 
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--texto-suave);
+}
+
+.menu-item:hover { 
+    color: var(--texto); 
+}
+
+.menu-item.ativo {
+  color: var(--verde);
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--borda);
+}
+
+.avatar {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--borda) center / cover no-repeat;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.usuario-info { 
+    flex: 1; min-width: 0; 
+}
+
+.usuario-info strong { 
+    display: block; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; 
+}
+
+.usuario-info span { 
+    font-size: 10px; color: var(--texto-suave); 
+}
+
+.botao-sair {
+  background: none;
+  border: 0;
+  color: var(--texto-suave);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.botao-sair:hover { 
+    color: var(--texto); 
+}
+
+.topo {
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--borda);
+}
+
+.topo h1 { 
+    font-size: 18px; 
+}
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px 32px 40px;
+}
+
+.secao-titulo { 
+    font-size: 13px; font-weight: 600; 
+}
+
+.caixa {
+  padding: 18px;
+  background: var(--caixa);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+}
+
+.caixa h3 { 
+    font-size: 12px; font-weight: 600; 
+}
+
+.leituras {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.leitura-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--texto-suave);
+}
+
+.icone {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.icone.verde, .selo.verde { 
+    background: rgba(16, 185, 129, 0.12); 
+}
+
+.icone.azul,  .selo.azul  { 
+    background: rgba(56, 189, 248, 0.12); 
+}
+
+.icone.ambar, .selo.ambar { background: rgba(245, 158, 11, 0.12); 
+}
+
+.valor { 
+    margin: 14px 0 12px; font-size: 26px; font-weight: 700; 
+}
+
+.valor small { 
+    font-size: 12px; font-weight: 400; color: var(--texto-suave); 
+}
+
+.selo {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 10px;
+}
+
+.graficos {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 16px;
+}
+
+.grafico-topo {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.legenda { 
+    display: flex; gap: 14px; font-size: 10px; color: var(--texto-suave); 
+}
+.ponto { 
+    display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; 
+}
+.ponto.verde { 
+    background: var(--verde); 
+}
+.ponto.azul  { 
+    background: var(--azul); 
+}
+
+#grafico { 
+    display: block; width: 100%; height: 190px; margin-top: 20px; 
+}
+
+#grafico * { 
+    vector-effect: non-scaling-stroke; 
+}
+
+.grade { 
+    stroke: var(--borda); 
+}
+
+.linha { 
+    fill: none; stroke-width: 2; stroke-linejoin: round; 
+}
+
+.linha-ar    { 
+    stroke: var(--verde); 
+}
+
+.linha-solo  { 
+    stroke: var(--azul); 
+}
+
+.grafico-horas {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 10px;
+  color: var(--texto-suave);
+}
+
+.previsao { 
+    list-style: none; margin: 14px 0 0; padding: 0; 
+}
+
+.previsao li {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--borda);
+  font-size: 11px;
+}
+
+.previsao li:last-child { 
+    border-bottom: 0; 
+}
+
+.previsao span { 
+    color: var(--texto-suave); 
+}
+
+.previsao strong { 
+    font-size: 12px; 
+}
+
+.previsao .aviso {
+  display: block;
+  color: var(--texto-suave);
+}
+
+.recomendacao-titulo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--borda);
+}
+
+.recomendacoes { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.recomendacoes h4 { margin-bottom: 8px; font-size: 12px; }
+.recomendacoes p { font-size: 11px; line-height: 1.7; color: var(--texto-suave); }
+
+@media (max-width: 1000px) {
+  .leituras { grid-template-columns: repeat(2, 1fr); }
+  .graficos { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+  .layout { grid-template-columns: 1fr; }
+
+  .menu { position: static; height: auto; gap: 16px; padding: 16px; border-right: 0; border-bottom: 1px solid var(--borda); }
+  .marca { padding-bottom: 14px; }
+  nav { flex-direction: row; overflow-x: auto; }
+  .menu-item { white-space: nowrap; }
+
+  .topo, .pagina { padding-left: 16px; padding-right: 16px; }
+  .recomendacoes { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  .leituras { grid-template-columns: 1fr; }
+}

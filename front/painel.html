@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ClimaSync - Painel</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="painel.css">
+</head>
+<body>
+<div class="layout">
+
+  <!-- MENU LATERAL -->
+  <aside class="menu">
+    <div class="menu-topo">
+      <div class="marca">
+        <strong>ClimaSync</strong>
+        <span>Estação Agroambiental</span>
+      </div>
+      <nav>
+        <a class="menu-item ativo" href="painel.html"><i class="bi bi-grid"></i> Painel Geral</a>
+        <a class="menu-item" href="#"><i class="bi bi-file-earmark-text"></i> Histórico &amp; Dados</a>
+        <a class="menu-item" href="#"><i class="bi bi-people"></i> Gestão de Funcionários</a>
+      </nav>
+    </div>
+
+    <div class="usuario">
+      <div class="avatar" id="usuarioFoto">?</div>
+      <div class="usuario-info">
+        <strong id="usuarioNome">Carregando...</strong>
+        <span>Agrônomo Responsável</span>
+      </div>
+      <button class="botao-sair" id="sair" type="button" title="Sair" aria-label="Sair">
+        <i class="bi bi-box-arrow-right"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="conteudo">
+    <header class="topo"><h1>Painel Agroambiental</h1></header>
+
+    <div class="pagina">
+      <h2 class="secao-titulo">Leituras em Tempo Real</h2>
+
+      <!-- 4 cartões de leitura -->
+      <section class="leituras">
+        <article class="caixa">
+          <div class="leitura-topo">
+            <span>Temperatura do Ar</span>
+            <i class="icone verde bi bi-thermometer-half"></i>
+          </div>
+          <p class="valor">27.4 <small>°C</small></p>
+          <span class="selo verde">Faixa Ideal</span>
+        </article>
+
+        <article class="caixa">
+          <div class="leitura-topo">
+            <span>Umidade do Solo</span>
+            <i class="icone azul bi bi-moisture"></i>
+          </div>
+          <p class="valor">42.8 <small>%</small></p>
+          <span class="selo azul">Solo Úmido (Excelente)</span>
+        </article>
+
+        <article class="caixa">
+          <div class="leitura-topo">
+            <span>Umidade Relativa do Ar</span>
+            <i class="icone azul bi bi-droplet-half"></i>
+          </div>
+          <p class="valor">68.2 <small>%</small></p>
+          <span class="selo azul">Estável</span>
+        </article>
+
+        <article class="caixa">
+          <div class="leitura-topo">
+            <span>Chuva Acumulada</span>
+            <i class="icone ambar bi bi-cloud-rain"></i>
+          </div>
+          <p class="valor">14.2 <small>mm</small></p>
+          <span class="selo ambar">Nas últimas 24h</span>
+        </article>
+      </section>
+
+      <!-- Gráfico + previsão -->
+      <section class="graficos">
+        <article class="caixa">
+          <div class="grafico-topo">
+            <div>
+              <h3>Tendência de Temperatura (Ar vs Solo)</h3>
+              <p class="suave">Últimas 12 horas monitoradas</p>
+            </div>
+            <div class="legenda">
+              <span><i class="ponto verde"></i> Temp. do Ar (°C)</span>
+              <span><i class="ponto azul"></i> Umid. Solo (%)</span>
+            </div>
+          </div>
+          <svg id="grafico" viewBox="0 0 500 180" preserveAspectRatio="none" role="img"
+               aria-label="Gráfico de temperatura do ar e umidade do solo"></svg>
+          <div class="grafico-horas">
+            <span>06:00</span><span>09:00</span><span>12:00</span><span>15:00</span><span>Agora (18:00)</span>
+          </div>
+        </article>
+
+        <article class="caixa">
+            <h3>Previsão Agro-Meteorológica</h3>
+            <p class="suave">Próximos 5 dias de plantio</p>
+            <ul class="previsao" id="previsao">
+                <li class="aviso">Carregando previsão...</li>
+            </ul>
+            <p class="suave">Dados: <a href="https://open-meteo.com" target="_blank">Open-Meteo</a></p>
+        </article>
+      </section>
+
+      <!-- Recomendações -->
+      <section class="caixa">
+        <h3 class="recomendacao-titulo"><i class="bi bi-flower1 verde"></i> Recomendações e Inteligência de Plantio</h3>
+        <div class="recomendacoes">
+          <div>
+            <h4 class="azul">Status de Irrigação</h4>
+            <p>A umidade do solo a 10cm de profundidade está em 42.8%. Devido à previsão de chuva moderada na Quarta-feira, recomenda-se adiar o próximo ciclo de irrigação em 24h.</p>
+          </div>
+          <div>
+            <h4 class="verde">Saúde Térmica das Raízes</h4>
+            <p>A temperatura média do solo estabilizou em 22.1°C nas primeiras horas do dia. Excelente equilíbrio térmico para absorção de nitrogênio e fósforo nas culturas de soja.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="painel.js"></script>
+</body>
+</html>
