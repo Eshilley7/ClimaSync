@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ClimaSync - Histórico</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="historico.css">
+    </head>
+    <body>
+    <div class="layout">
+
+        <aside class="menu">
+            <div class="menu-topo">
+                <div class="marca">
+                    <strong>ClimaSync</strong>
+                    <span>Estação Agroambiental</span>
+                </div>
+                <nav>
+                    <a class="menu-item" href="painel.html"><i class="bi bi-grid"></i> Painel Geral</a>
+                    <a class="menu-item ativo" href="historico.html"><i class="bi bi-file-earmark-text"></i> Histórico &amp; Dados</a>
+                    <a class="menu-item" href="#"><i class="bi bi-people"></i> Gestão de Funcionários</a>
+                </nav>
+            </div>
+
+            <div class="usuario">
+                <div class="avatar" id="usuarioFoto">?</div>
+                <div class="usuario-info">
+                    <strong id="usuarioNome">Carregando...</strong>
+                    <span>Agrônomo Responsável</span>
+                </div>
+                <button class="botao-sair" id="sair" type="button" title="Sair" aria-label="Sair">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </div>
+        </aside>
+
+        <main class="conteudo">
+            <header class="topo"><h1>Histórico e Medições</h1></header>
+            <div class="pagina">
+                
+                <section class="caixa filtros">
+                    <label class="filtro"><i class="bi bi-calendar3"></i> Data Inicial: <input type="date" id="dataInicial"></label>
+                    <label class="filtro"><i class="bi bi-calendar3"></i> Data Final: <input type="date" id="dataFinal"></label>
+                    <select class="filtro" id="sensor" aria-label="Sensor">
+                    <option value="todos">Todos os Sensores</option>
+                    <option value="temperatura">Temperatura</option>
+                    <option value="umidade">Umidade</option>
+                    <option value="chuva">Chuva</option>
+                    </select>
+                    <button class="botao-exportar" id="exportar" type="button">
+                    <i class="bi bi-file-earmark-image"></i> Exportar Relatório JPEG
+                    </button>
+                </section>
+
+                <section class="historico-grid">
+                    <article class="caixa" id="relatorio">
+                    <h3>Medições Registradas</h3>
+                    <p class="suave">Exibindo leituras de hora em hora</p>
+                    <div class="tabela-rolagem">
+                        <table class="tabela" id="tabela"></table>
+                    </div>
+                    </article>
+
+                    <article class="caixa">
+                    <h3>Lançamento Manual</h3>
+                    <p class="suave">Registre novas observações de campo</p>
+
+                    <form class="formulario" id="formulario" novalidate>
+                        <div>
+                        <label for="tempAr">Temperatura do Ar (°C)</label>
+                        <input id="tempAr" type="number" step="0.1" placeholder="Ex: 28.5">
+                        </div>
+                        <div>
+                        <label for="umidSolo">Umidade do Solo (%)</label>
+                        <input id="umidSolo" type="number" step="0.1" min="0" max="100" placeholder="Ex: 45">
+                        </div>
+                        <div>
+                        <label for="chuva">Precipitação de Chuva (mm)</label>
+                        <input id="chuva" type="number" step="0.1" min="0" placeholder="0.0">
+                        </div>
+                        <div>
+                        <label for="observacoes">Observações de Campo</label>
+                        <textarea id="observacoes" placeholder="Ex: Plantio saudável, solo bem compactado..."></textarea>
+                        </div>
+
+                        <button class="botao-salvar" type="submit">Salvar Nova Medição</button>
+                        <p class="aviso-form" id="avisoForm" role="status" aria-live="polite"></p>
+                    </form>
+                    </article>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="historico.js"></script>
+    </body>
+</html>
