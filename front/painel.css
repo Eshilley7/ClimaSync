@@ -329,9 +329,31 @@ nav {
 }
 
 @media (max-width: 760px) {
-  .layout { grid-template-columns: 1fr; }
+  .layout {
+    grid-template-columns: minmax(0, 1fr);  
+    grid-template-rows: auto 1fr auto;    
+  }
 
-  .menu { position: static; height: auto; gap: 16px; padding: 16px; border-right: 0; border-bottom: 1px solid var(--borda); }
+  .menu { display: contents; }
+
+  .menu-topo {
+    order: 1;
+    padding: 16px;
+    background: var(--menu);
+    border-bottom: 1px solid var(--borda);
+  }
+
+  .conteudo {
+    order: 2;
+    min-width: 0;
+  }
+
+  .usuario {
+    order: 3;                 
+    background: var(--menu);
+    border-top: 1px solid var(--borda);
+  }
+
   .marca { padding-bottom: 14px; }
   nav { flex-direction: row; overflow-x: auto; }
   .menu-item { white-space: nowrap; }

@@ -252,16 +252,18 @@ label {
 
 
 @media (max-width: 860px) {
-  .page {
-    grid-template-columns: 1fr; 
+  .log {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;  
   }
 
   .fundo {
-    height: 250px;
-    background-position: center 35%;
+    aspect-ratio: 17 / 10;
+    background-position: center 38%;  
   }
 
-  .logo-mobile {
-    display: none;
+  .side {
+    align-items: flex-start;
+    padding: 32px 20px 40px;
   }
 }

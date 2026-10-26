@@ -3,70 +3,89 @@ const db = window.supabase.createClient(
   'sb_publishable_HDorc-migsMoX-S4nNarkQ_t_aej_3K'
 );
 
-const $ = id => document.getElementById(id);
-const email = $('email'), senha = $('senha'), btn = $('submit'), toast = $('toast');
+const formulario  = document.getElementById('login');
+const campoEmail  = document.getElementById('email');
+const campoSenha  = document.getElementById('senha');
+const caixaEmail  = document.getElementById('emailBox');
+const caixaSenha  = document.getElementById('senhaBox');
+const botaoEntrar = document.getElementById('submit');
+const botaoOlho   = document.getElementById('toggle');
+const iconeOlho   = document.getElementById('iconeOlho');
+const botaoGoogle = document.getElementById('google');
+const mensagem    = document.getElementById('toast');
 
-db.auth.getSession().then(({ data: { session } }) => {
-  if (session) window.location.href = 'painel.html';
+function emailValido(texto) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(texto);
+}
+
+function marcarCampo(caixa, comErro) {
+  caixa.classList.toggle('invalido', comErro);
+}
+
+function mostrarErro(texto) {
+  mensagem.textContent = texto;
+  mensagem.classList.add('com-erro');
+}
+
+db.auth.getSession().then(({ data }) => {
+  if (data.session) window.location.href = 'painel.html';
 });
 
-$('toggle').addEventListener('click', e => {
-  const show = senha.type === 'password';
-  senha.type = show ? 'text' : 'password';
-  $('iconeOlho').className = show ? 'bi bi-eye-slash' : 'bi bi-eye';
-  e.currentTarget.setAttribute('aria-pressed', show);
-  e.currentTarget.setAttribute('aria-label', show ? 'Ocultar senha' : 'Mostrar senha');
+botaoOlho.addEventListener('click', () => {
+  const estavaEscondida = campoSenha.type === 'password';
+
+  campoSenha.type = estavaEscondida ? 'text' : 'password';
+  iconeOlho.className = estavaEscondida ? 'bi bi-eye-slash' : 'bi bi-eye';
+  botaoOlho.setAttribute('aria-label', estavaEscondida ? 'Ocultar senha' : 'Mostrar senha');
 });
 
-const validEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-const mark = (box, bad) => box.classList.toggle('invalido', bad);
-email.addEventListener('input', () => mark($('emailBox'), false));
-senha.addEventListener('input', () => mark($('senhaBox'), false));
+campoEmail.addEventListener('input', () => marcarCampo(caixaEmail, false));
+campoSenha.addEventListener('input', () => marcarCampo(caixaSenha, false));
 
-$('login').addEventListener('submit', async e => {
-  e.preventDefault();
-  toast.textContent = '';
-  const badEmail = !validEmail(email.value.trim());
-  const badSenha = senha.value.length < 6;
-  mark($('emailBox'), badEmail);
-  mark($('senhaBox'), badSenha);
-  if (badEmail) return email.focus();
-  if (badSenha) return senha.focus();
+formulario.addEventListener('submit', async (evento) => {
+  evento.preventDefault();   // impede a página de recarregar
+  mensagem.textContent = '';
 
-  btn.disabled = true;
-  btn.innerHTML = '<span class="carregando"></span> Entrando...';
+  const email = campoEmail.value.trim();
+  const senha = campoSenha.value;
 
-  const { error } = await db.auth.signInWithPassword({
-    email: email.value.trim(),
-    password: senha.value
-  });
+  const emailInvalido = !emailValido(email);
+  const senhaInvalida = senha.length < 6;
+  marcarCampo(caixaEmail, emailInvalido);
+  marcarCampo(caixaSenha, senhaInvalida);
+  if (emailInvalido) return campoEmail.focus();
+  if (senhaInvalida) return campoSenha.focus();
 
-  btn.disabled = false;
-  btn.textContent = 'Acessar Painel';
+  botaoEntrar.disabled = true;
+  botaoEntrar.innerHTML = '<span class="carregando"></span> Entrando...';
 
-  if (error) {
-  console.log('Erro do Supabase:', error.message);
-  toast.textContent = error.message;
-  } else {
+  const { error } = await db.auth.signInWithPassword({ email, password: senha });
+
+  botaoEntrar.disabled = false;
+  botaoEntrar.textContent = 'Acessar Painel';
+
+  if (!error) {
     window.location.href = 'painel.html';
+  } else if (error.message === 'Invalid login credentials') {
+    mostrarErro('E-mail ou senha incorretos.');
+  } else if (error.message === 'Email not confirmed') {
+    mostrarErro('Confirme seu e-mail antes de entrar.');
+  } else {
+    mostrarErro('Não foi possível entrar. Tente novamente.');
   }
-  });
+});
 
-$('google').addEventListener('click', async () => {
+botaoGoogle.addEventListener('click', async () => {
   const { error } = await db.auth.signInWithOAuth({
     provider: 'google',
-    options: {
-      redirectTo: new URL('painel.html', window.location.href).href
-    }
+    options: { redirectTo: new URL('painel.html', window.location.href).href }
   });
 
-  if (error) toast.textContent = 'Erro ao entrar com Google: ' + error.message;
+  if (error) mostrarErro('Não foi possível entrar com o Google. Tente novamente.');
 });
 
 const parametros = new URLSearchParams(window.location.hash.slice(1) || window.location.search);
-const erroNaUrl = parametros.get('error_description');
 
-if (erroNaUrl) {
-  toast.textContent = erroNaUrl;
-  toast.classList.add('com-erro');
+if (parametros.get('error_description')) {
+  mostrarErro('Não foi possível entrar com o Google. Seu e-mail pode não ter acesso. Solicite à gerência.');
 }
