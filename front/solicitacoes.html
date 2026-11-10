@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ClimaSync | Solicitações</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="solicitacoes.css">
+    </head>
+
+    <body>
+        <div class="app-sol">
+            <aside class="barra-sol">
+                <div class="marca-sol">
+                    <b>ClimaSync</b>
+                    <small>Estação Agroambiental</small>
+                </div>
+                <nav>
+                    <a href="painel.html">
+                        <i class="bi bi-grid"></i>
+                        Painel Geral
+                    </a>
+                    <a href="historico.html">
+                        <i class="bi bi-file-earmark-text"></i>
+                        Histórico &amp; Dados
+                    </a>
+                    <a href="gestao.html">
+                        <i class="bi bi-people"></i>
+                        Gestão de Funcionários
+                    </a>
+                    <a class="selecionado" href="solicitacoes.html"
+                    aria-current="page">
+                        <i class="bi bi-inbox"></i>
+                        Solicitações
+                        <span id="badgePendentes">0</span>
+                    </a>
+                </nav>
+
+                <div class="perfil-sol">
+                    <div class="avatar-sol" id="avatarAdmin">E</div>
+                    <div class="info-admin-sol">
+                        <b id="nomeAdmin">Carregando...</b>
+                        <small>Administrador</small>
+                    </div>
+                    <button id="sairSolicitacoes" type="button" title="Sair">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </button>
+                </div>
+            </aside>
+
+            <main class="principal-sol">
+                <header class="cabecalho-pagina-sol">
+                    <div>
+                        <h1>Solicitações de Acesso</h1>
+                    </div>
+                </header>
+                <section class="indicadores">
+                    <article>
+                        <small>Pendentes</small>
+                        <strong id="totalPendentes">00</strong>
+                        <span>Solicitações aguardando análise</span>
+                        <i class="bi bi-clock-history amarelo"></i>
+                    </article>
+                    <article>
+                        <small>Aprovadas</small>
+                        <strong id="totalAprovadas">00</strong>
+                        <span>Acessos liberados</span>
+                        <i class="bi bi-person-check verde"></i>
+                    </article>
+                </section>
+
+                <section class="filtros-sol">
+                    <label class="busca-sol">
+                        <i class="bi bi-search"></i>
+                        <input
+                            id="buscarSol"
+                            type="search"
+                            placeholder="Buscar por nome ou e-mail..."
+                            aria-label="Buscar solicitações">
+                    </label>
+                    <select id="filtrarStatus"
+                            aria-label="Filtrar por status">
+                        <option value="todos">Todos os status</option>
+                        <option value="pendente">Pendentes</option>
+                        <option value="aprovada">Aprovadas</option>
+                        <option value="recusada">Recusadas</option>
+                    </select>
+                    <select id="filtrarPerfil"
+                            aria-label="Filtrar por perfil">
+                        <option value="todos">Todos os perfis</option>
+                    </select>
+                    <div class="grupo-data-sol">
+                        <label for="dataInicial">De</label>
+                        <input type="date" id="dataInicial">
+                    </div>
+                    <div class="grupo-data-sol">
+                        <label for="dataFinal">Até</label>
+                        <input type="date" id="dataFinal">
+                    </div>
+                    <button id="limparFiltros" type="button">
+                        <i class="bi bi-x-circle"></i>
+                        Limpar filtros
+                    </button>
+                </section>
+
+                <div class="colunas-sol">
+                    <section class="painel-sol">
+                        <header>
+                            <div>
+                                <h2>Solicitações recebidas</h2>
+                                <p>Selecione uma solicitação para analisar.</p>
+                            </div>
+                            <small>Mais recentes</small>
+                        </header>
+                        <div class="tabela-cab">
+                            <span>SOLICITANTE / PERFIL</span>
+                            <span>RECEBIDA EM</span>
+                            <span>STATUS</span>
+                        </div>
+                        <div id="listaSolicitacoes" class="lista-sol">
+                            <p class="vazio-sol">Carregando...</p>
+                        </div>
+                        <footer id="rodapeLista">—</footer>
+                    </section>
+
+                    <section class="painel-sol detalhe-sol">
+                        <header>
+                            <h2>Detalhes da solicitação</h2>
+                            <small id="codigoSolicitacao">—</small>
+                        </header>
+                        <div id="detalhesSolicitacao" class="vazio-sol">
+                            Selecione uma solicitação na lista.
+                        </div>
+                        <p id="feedbackAdmin" role="status"></p>
+                    </section>
+                </div>
+
+                <footer class="rodape-sol">
+                    <span id="atualizadoEm">—</span>
+                    <span>Todas as decisões são registradas no banco de dados.</span>
+                </footer>
+            </main>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <script src="solicitacoes.js"></script>
+        <script src="acesso-menu.js"></script>
+    </body>
+</html>

@@ -53,12 +53,83 @@
                         Continuar com o Google
                     </button>
 
-                    <p class="cadastro">Não possui uma conta? <a href="#">Solicitar acesso à gerência</a></p>
+                    <p class="cadastro">Não possui uma conta? <a href="#" id="abrirSolicitacao">Solicitar acesso à gerência</a></p>
                     <div class="mensagem" id="toast" role="status" aria-live="polite"></div>
                 </div>
             </section>
         </main>
+
+<!-- POP-UP DE SOLICITAÇÃO DE ACESSO -->
+        <dialog id="modalSolicitacao" class="modal-solicitacao">
+
+            <div class="modal-topo">
+                <div>
+                    <h2>Solicitar acesso</h2>
+                    <p>Preencha os dados para solicitar acesso ao ClimaSync.</p>
+                </div>
+
+                <button type="button" id="fecharSolicitacao" aria-label="Fechar">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <form id="formSolicitacao">
+
+                <div class="campo-modal">
+                    <label for="solNome">Nome completo</label>
+                    <input type="text" id="solNome" name="nome"
+                        placeholder="Digite seu nome completo"
+                        minlength="3" maxlength="120" required>
+                </div>
+
+                <div class="campo-modal">
+                    <label for="solEmail">E-mail profissional</label>
+                    <input type="email" id="solEmail" name="email"
+                        placeholder="nome@empresa.com.br"
+                        required>
+                </div>
+
+                <div class="campo-modal">
+                    <label for="solTelefone">Telefone</label>
+                    <input type="tel" id="solTelefone" name="telefone"
+                        placeholder="(00) 00000-0000">
+                </div>
+
+                <div class="campo-modal">
+                    <label for="solPerfil">Perfil solicitado</label>
+                    <select id="solPerfil" name="perfil" required>
+                        <option value="">Selecione seu perfil</option>
+                        <option value="Operador de Estação">Operador de Estação</option>
+                        <option value="Técnico de Campo">Técnico de Campo</option>
+                        <option value="Analista de Solo">Analista de Solo</option>
+                        <option value="Agrônomo Responsável">Agrônomo Responsável</option>
+                        <option value="Pesquisador Climatologista">Pesquisador Climatologista</option>
+                    </select>
+                </div>
+
+                <div class="campo-modal">
+                    <label for="solMotivo">Motivo da solicitação</label>
+                    <textarea id="solMotivo" name="motivo"
+                        rows="4"
+                        minlength="10"
+                        maxlength="1000"
+                        placeholder="Explique por que precisa acessar o sistema..."
+                        required></textarea>
+                </div>
+
+                <button type="submit" id="enviarSolicitacao"
+                    class="botao botao-principal">
+                    <i class="bi bi-send"></i>
+                    Enviar solicitação
+                </button>
+
+                <p id="avisoSolicitacao" role="status"></p>
+
+            </form>
+        </dialog>
+
         <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
         <script src="login.js"></script>
+        <script src="solicitar-acesso.js"></script>
     </body>
 </html>

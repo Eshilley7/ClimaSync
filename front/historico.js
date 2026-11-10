@@ -521,3 +521,4 @@ document.getElementById('exportarCsv').addEventListener('click', () => {
 
   URL.revokeObjectURL(link.href);
 });
+

@@ -289,6 +289,10 @@ select.filtro { cursor: pointer; }
 
 .aviso-form.com-erro { color: var(--erro); }
 
+[hidden] {
+    display: none !important;
+}
+
 @media (max-width: 1000px) {
   .historico-grid { grid-template-columns: 1fr; }
 }

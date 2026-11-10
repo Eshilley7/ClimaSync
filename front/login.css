@@ -270,3 +270,110 @@ label {
     padding: 32px 20px 40px;
   }
 }
+
+
+
+/* POP-UP DE SOLICITAÇÃO */
+
+.modal-solicitacao {
+    width: min(450px, 92vw);
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 28px;
+    background: #141f32;
+    color: #ffffff;
+    border: 1px solid #2a3951;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    margin: auto;
+}
+
+.modal-solicitacao::backdrop {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+}
+
+.modal-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 22px;
+    gap: 15px;
+}
+
+.modal-topo h2 {
+    margin: 0 0 8px;
+    font-size: 22px;
+    color: #ffffff;
+}
+
+.modal-topo p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #9caac1;
+    margin: 0;
+}
+
+#fecharSolicitacao {
+    background: transparent;
+    border: none;
+    color: #9caac1;
+    font-size: 19px;
+    cursor: pointer;
+}
+
+#fecharSolicitacao:hover {
+    color: #ffffff;
+}
+
+.campo-modal {
+    margin-bottom: 17px;
+}
+
+.campo-modal label {
+    display: block;
+    font-size: 12px;
+    color: #c9d5e7;
+    margin-bottom: 7px;
+}
+
+.campo-modal input,
+.campo-modal select,
+.campo-modal textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background: #0b1424;
+    border: 1px solid #2a3951;
+    border-radius: 7px;
+    padding: 12px;
+    color: #ffffff;
+    font-size: 13px;
+    outline: none;
+}
+
+.campo-modal input:focus,
+.campo-modal select:focus,
+.campo-modal textarea:focus {
+    border-color: #0cc18c;
+}
+
+.campo-modal textarea {
+    resize: vertical;
+}
+
+#enviarSolicitacao {
+    width: 100%;
+    margin-top: 8px;
+}
+
+#enviarSolicitacao:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#avisoSolicitacao {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 12px;
+    color: #0cc18c;
+}

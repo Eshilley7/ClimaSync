@@ -461,3 +461,4 @@ async function carregarPrevisao() {
 
 carregarPrevisao();
 setInterval(carregarPrevisao, MINUTOS_PARA_ATUALIZAR * 60 * 1000);
+
