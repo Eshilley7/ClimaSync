@@ -187,6 +187,7 @@ select.filtro { cursor: pointer; }
 }
 
 .botao-exportar:hover { background: rgba(16, 185, 129, 0.2); }
+.botao-exportar + .botao-exportar { margin-left: 0; }
 .botao-exportar i { color: var(--verde); }
 
 .historico-grid {
@@ -326,4 +327,25 @@ select.filtro { cursor: pointer; }
 @media (max-width: 520px) {
   .filtro { flex: 1 1 100%; }
   .botao-exportar { margin-left: 0; width: 100%; justify-content: center; }
+}
+
+@media print {
+  body * { visibility: hidden; }
+
+  #relatorio, #relatorio * {
+    visibility: visible;
+    color: #000 !important;
+    background: #fff !important;
+  }
+
+  #relatorio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border: 0;
+  }
+
+  .tabela-rolagem { max-height: none; overflow: visible; }
+  .tabela td { border-top: 1px solid #ccc; }
 }

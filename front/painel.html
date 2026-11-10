@@ -18,7 +18,9 @@
           <nav>
             <a class="menu-item ativo" href="painel.html"><i class="bi bi-grid"></i> Painel Geral</a>
             <a class="menu-item" href="historico.html"><i class="bi bi-file-earmark-text"></i> Histórico &amp; Dados</a>
-            <a class="menu-item" href="#"><i class="bi bi-people"></i> Gestão de Funcionários</a>
+            <a class="menu-item" id="linkGestao" href="gestao.html" hidden>
+              <i class="bi bi-people"></i> Gestão de Funcionários
+            </a>
           </nav>
         </div>
 
@@ -26,7 +28,7 @@
           <div class="avatar" id="usuarioFoto">?</div>
           <div class="usuario-info">
             <strong id="usuarioNome">Carregando...</strong>
-            <span>Agrônomo Responsável</span>
+            <span id="usuarioPerfil">Carregando perfil...</span>
           </div>
           <button class="botao-sair" id="sair" type="button" title="Sair" aria-label="Sair">
             <i class="bi bi-box-arrow-right"></i>
@@ -39,33 +41,16 @@
 
         <div class="pagina">
           <h2 class="secao-titulo">Leituras em Tempo Real</h2>
-
+          
           <section class="leituras">
-            <article class="caixa">
-              <div class="leitura-topo">
-                <span>Temperatura do Solo</span>
-                <i class="icone ambar bi bi-thermometer-low"></i>
-              </div>
-              <p class="valor">33.7 <small>°C</small></p>
-              <span class="selo ambar">Acima do Ideal</span>
-            </article>
 
             <article class="caixa">
               <div class="leitura-topo">
-                <span>Temperatura do Ar</span>
-                <i class="icone ambar bi bi-thermometer-half"></i>
+                <span>Chuva</span>
+                <i class="icone azul bi bi-cloud-rain"></i>
               </div>
-              <p class="valor">27.4 <small>°C</small></p>
-              <span class="selo ambar">Faixa Ideal</span>
-            </article>
-
-            <article class="caixa">
-              <div class="leitura-topo">
-                <span>Pressão do Ar</span>
-                <i class="icone azul bi bi-speedometer"></i>
-              </div>
-              <p class="valor">1013.25 <small>hP</small></p>
-              <span class="selo azul">Estável</span>
+              <p class="valor"><span id="valorChuva">--</span></p>
+              <span class="selo azul" id="seloChuva">Aguardando</span>
             </article>
 
             <article class="caixa">
@@ -73,18 +58,46 @@
                 <span>Umidade do Solo</span>
                 <i class="icone azul bi bi-moisture"></i>
               </div>
-              <p class="valor">42.8 <small>%</small></p>
-              <span class="selo azul">Solo Úmido</span>
+              <p class="valor"><span id="valorUmidSolo">--</span> <small>%</small></p>
+              <span class="selo azul" id="seloUmidSolo">Aguardando</span>
             </article>
 
             <article class="caixa">
               <div class="leitura-topo">
-                <span>Chuva</span>
-                <i class="icone azul bi bi-cloud-rain"></i>
+                <span>Umidade Relativa do Ar</span>
+                <i class="icone azul bi bi-droplet-half"></i>
               </div>
-              <p class="valor">Sim</p>
-              <span class="selo azul">Atualizado de 3 em 3 horas</span>
+              <p class="valor"><span id="valorUmidAr">--</span> <small>%</small></p>
+              <span class="selo azul" id="seloUmidAr">Aguardando</span>
             </article>
+
+            <article class="caixa">
+              <div class="leitura-topo">
+                <span>Pressão do Ar</span>
+                <i class="icone ambar bi bi-speedometer2"></i>
+              </div>
+              <p class="valor"><span id="valorPressao">--</span> <small>hPa</small></p>
+              <span class="selo azul" id="seloPressao">Aguardando</span>
+            </article>
+
+            <article class="caixa">
+              <div class="leitura-topo">
+                <span>Luminosidade</span>
+                <i class="icone ambar bi bi-brightness-high"></i>
+              </div>
+              <p class="valor"><span id="valorLuz">--</span> <small>lux</small></p>
+              <span class="selo ambar" id="seloLuz">Aguardando</span>
+            </article>
+
+            <article class="caixa">
+              <div class="leitura-topo">
+                <span>Temperatura do Ar</span>
+                <i class="icone ambar bi bi-thermometer-low"></i>
+              </div>
+              <p class="valor"><span id="valorTempAr">--</span> <small>°C</small></p>
+              <span class="selo verde" id="seloTempAr">Aguardando</span>
+            </article>
+
           </section>
 
           <section class="graficos">
@@ -101,8 +114,7 @@
               </div>
               <svg id="grafico" viewBox="0 0 500 180" preserveAspectRatio="none" role="img"
                   aria-label="Gráfico de temperatura do ar e umidade do solo"></svg>
-              <div class="grafico-horas">
-                <span>06:00</span><span>09:00</span><span>12:00</span><span>15:00</span><span>Agora (18:00)</span>
+              <div class="grafico-horas" id="graficoHoras">
               </div>
             </article>
 
@@ -135,6 +147,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="acesso-menu.js"></script>
     <script src="painel.js"></script>
   </body>
 </html>

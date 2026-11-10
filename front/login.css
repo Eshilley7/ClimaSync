@@ -250,6 +250,9 @@ label {
   color: var(--verde);
 }
 
+[hidden] {
+  display: none !important;
+}
 
 @media (max-width: 860px) {
   .log {

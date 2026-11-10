@@ -19,7 +19,9 @@
                 <nav>
                     <a class="menu-item" href="painel.html"><i class="bi bi-grid"></i> Painel Geral</a>
                     <a class="menu-item ativo" href="historico.html"><i class="bi bi-file-earmark-text"></i> Histórico &amp; Dados</a>
-                    <a class="menu-item" href="#"><i class="bi bi-people"></i> Gestão de Funcionários</a>
+                    <a class="menu-item" id="linkGestao" href="gestao.html" hidden>
+                        <i class="bi bi-people"></i> Gestão de Funcionários
+                    </a>
                 </nav>
             </div>
 
@@ -27,7 +29,7 @@
                 <div class="avatar" id="usuarioFoto">?</div>
                 <div class="usuario-info">
                     <strong id="usuarioNome">Carregando...</strong>
-                    <span>Agrônomo Responsável</span>
+                    <span id="usuarioPerfil">Carregando perfil...</span>
                 </div>
                 <button class="botao-sair" id="sair" type="button" title="Sair" aria-label="Sair">
                     <i class="bi bi-box-arrow-right"></i>
@@ -42,15 +44,23 @@
                 <section class="caixa filtros">
                     <label class="filtro"><i class="bi bi-calendar3"></i> Data Inicial: <input type="date" id="dataInicial"></label>
                     <label class="filtro"><i class="bi bi-calendar3"></i> Data Final: <input type="date" id="dataFinal"></label>
+                    
                     <select class="filtro" id="sensor" aria-label="Sensor">
-                    <option value="todos">Todos os Sensores</option>
-                    <option value="temperatura">Temperatura</option>
-                    <option value="umidade">Umidade</option>
-                    <option value="chuva">Chuva</option>
+                        <option value="todos">Todos os Sensores</option>
+                        <option value="temperatura">Temperatura</option>
+                        <option value="umidade">Umidade</option>
+                        <option value="pressao">Pressão</option>
+                        <option value="luz">Luminosidade</option>
+                        <option value="chuva">Chuva</option>
                     </select>
-                    <button class="botao-exportar" id="exportar" type="button">
-                    <i class="bi bi-file-earmark-image"></i> Exportar Relatório JPEG
+
+                    <button class="botao-exportar" id="exportarPdf" type="button">
+                        <i class="bi bi-file-earmark-pdf"></i> Exportar PDF
+                        </button>
+                        <button class="botao-exportar" id="exportarCsv" type="button">
+                        <i class="bi bi-file-earmark-spreadsheet"></i> Exportar Excel (CSV)
                     </button>
+
                 </section>
 
                 <section class="historico-grid">
@@ -94,6 +104,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="acesso-menu.js"></script>
     <script src="historico.js"></script>
     </body>
 </html>

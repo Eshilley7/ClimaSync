@@ -175,7 +175,7 @@ nav {
 
 .leituras {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
@@ -322,6 +322,10 @@ nav {
 .recomendacoes { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
 .recomendacoes h4 { margin-bottom: 8px; font-size: 12px; }
 .recomendacoes p { font-size: 11px; line-height: 1.7; color: var(--texto-suave); }
+
+[hidden] {
+  display: none !important;
+}
 
 @media (max-width: 1000px) {
   .leituras { grid-template-columns: repeat(2, 1fr); }

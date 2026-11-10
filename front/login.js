@@ -43,7 +43,7 @@ campoEmail.addEventListener('input', () => marcarCampo(caixaEmail, false));
 campoSenha.addEventListener('input', () => marcarCampo(caixaSenha, false));
 
 formulario.addEventListener('submit', async (evento) => {
-  evento.preventDefault();   // impede a página de recarregar
+  evento.preventDefault();   
   mensagem.textContent = '';
 
   const email = campoEmail.value.trim();
@@ -89,3 +89,9 @@ const parametros = new URLSearchParams(window.location.hash.slice(1) || window.l
 if (parametros.get('error_description')) {
   mostrarErro('Não foi possível entrar com o Google. Seu e-mail pode não ter acesso. Solicite à gerência.');
 }
+
+document.querySelector('.link-esqueci').addEventListener('click', (evento) => {
+  evento.preventDefault();
+  mensagem.classList.remove('com-erro');
+  mensagem.textContent = 'Para redefinir sua senha, solicite à gerência.';
+});
