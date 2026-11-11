@@ -1,115 +1,221 @@
+
 document.addEventListener('DOMContentLoaded', () => {
+  const modalSolicitacao = document.getElementById('modalSolicitacao');
+  const botaoAbrir = document.getElementById('abrirSolicitacao');
+  const botaoFechar = document.getElementById('fecharSolicitacao');
+  const formulario = document.getElementById('formSolicitacao');
+  const botaoEnviar = document.getElementById('enviarSolicitacao');
+  const aviso = document.getElementById('avisoSolicitacao');
 
-    const modalSolicitacao = document.getElementById('modalSolicitacao');
-    const botaoAbrir = document.getElementById('abrirSolicitacao');
-    const botaoFechar = document.getElementById('fecharSolicitacao');
-    const formulario = document.getElementById('formSolicitacao');
-    const botaoEnviar = document.getElementById('enviarSolicitacao');
-    const aviso = document.getElementById('avisoSolicitacao');
+  if (
+    !modalSolicitacao ||
+    !botaoAbrir ||
+    !botaoFechar ||
+    !formulario ||
+    !botaoEnviar ||
+    !aviso
+  ) {
+    console.error('Elementos do formulário não encontrados.');
+    return;
+  }
 
-    if (!modalSolicitacao || !botaoAbrir || !botaoFechar ||
-        !formulario || !botaoEnviar || !aviso) {
+  const supabaseSolicitacao = window.supabase.createClient(
+    'https://ygkvynojfoejztrlsujf.supabase.co',
+    'sb_publishable_HDorc-migsMoX-S4nNarkQ_t_aej_3K',
+    {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false
+      }
+    }
+  );
 
-        console.error('Erro: elementos do formulário de solicitação não encontrados.');
-        return;
+  function mostrarAviso(mensagem, sucesso = false) {
+    aviso.textContent = mensagem;
+    aviso.style.color = sucesso ? '#0cc18c' : '#ff6679';
+  }
+
+  function obterCampo(dados, nome, id) {
+    return String(
+      dados.get(nome) ||
+      document.getElementById(id)?.value ||
+      ''
+    ).trim();
+  }
+
+  botaoAbrir.addEventListener('click', evento => {
+    evento.preventDefault();
+    aviso.textContent = '';
+    modalSolicitacao.showModal();
+  });
+
+  botaoFechar.addEventListener('click', () => {
+    modalSolicitacao.close();
+  });
+
+  modalSolicitacao.addEventListener('click', evento => {
+    if (evento.target === modalSolicitacao) {
+      modalSolicitacao.close();
+    }
+  });
+
+  formulario.addEventListener('submit', async evento => {
+    evento.preventDefault();
+
+    aviso.textContent = '';
+
+    const formData = new FormData(formulario);
+
+    const nome = obterCampo(formData, 'nome', 'solNome');
+    const email = obterCampo(formData, 'email', 'solEmail').toLowerCase();
+    const telefone = obterCampo(formData, 'telefone', 'solTelefone');
+    const perfil = obterCampo(formData, 'perfil', 'solPerfil');
+    const motivo = obterCampo(formData, 'motivo', 'solMotivo');
+
+    const senha = obterCampo(formData, 'senha', 'solSenha');
+    const confirmarSenha = obterCampo(
+      formData,
+      'confirmarSenha',
+      'solConfirmarSenha'
+    );
+
+    if (nome.length < 3) {
+      mostrarAviso('Informe seu nome completo.');
+      return;
     }
 
-    botaoAbrir.addEventListener('click', (evento) => {
-        evento.preventDefault();
+    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        aviso.textContent = '';
-        modalSolicitacao.showModal();
-    });
+    if (!emailValido.test(email)) {
+      mostrarAviso('Informe um e-mail válido.');
+      return;
+    }
 
-    botaoFechar.addEventListener('click', () => {
-        modalSolicitacao.close();
-    });
+    if (!perfil) {
+      mostrarAviso('Selecione um perfil.');
+      return;
+    }
 
-    modalSolicitacao.addEventListener('click', (evento) => {
+    if (motivo.length < 10) {
+      mostrarAviso('Explique melhor o motivo da solicitação.');
+      return;
+    }
 
-        if (evento.target === modalSolicitacao) {
-            modalSolicitacao.close();
+    if (senha.length < 8) {
+      mostrarAviso('A senha deve ter pelo menos 8 caracteres.');
+      return;
+    }
+
+    if (senha !== confirmarSenha) {
+      mostrarAviso('As senhas não coincidem.');
+      return;
+    }
+
+    const textoOriginal = botaoEnviar.innerHTML;
+
+    botaoEnviar.disabled = true;
+    botaoEnviar.innerHTML =
+      '<i class="bi bi-hourglass-split"></i> Enviando...';
+
+    aviso.style.color = '#8a96ad';
+    aviso.textContent = 'Criando conta e enviando solicitação...';
+
+    try {
+      const { data: solicitacoesExistentes, error: erroConsulta } =
+        await supabaseSolicitacao
+          .from('solicitacoes_acesso')
+          .select('id, status')
+          .eq('email', email)
+          .in('status', ['pendente', 'aprovada'])
+          .limit(1);
+
+      if (erroConsulta) {
+        console.warn('Não foi possível consultar solicitações anteriores:', erroConsulta);
+      }
+
+      if (solicitacoesExistentes?.length) {
+        const status = solicitacoesExistentes[0].status;
+
+        if (status === 'pendente') {
+          throw new Error(
+            'Já existe uma solicitação pendente para este e-mail.'
+          );
         }
 
-    });
-
-    formulario.addEventListener('submit', async (evento) => {
-        evento.preventDefault();
-
-        aviso.textContent = '';
-
-        const dados = Object.fromEntries(
-            new FormData(formulario).entries()
+        throw new Error(
+          'Este e-mail já possui uma solicitação aprovada. Entre em contato com a gerência.'
         );
+      }
 
-        Object.keys(dados).forEach((campo) => {
-            dados[campo] = dados[campo].trim();
+      const { data: cadastro, error: erroCadastro } =
+        await supabaseSolicitacao.auth.signUp({
+          email,
+          password: senha,
+          options: {
+            data: {
+              full_name: nome
+            }
+          }
         });
 
-        if (dados.nome.length < 3) {
-            aviso.textContent = 'Informe seu nome completo.';
-            return;
-        }
+      if (erroCadastro) {
+        throw new Error(erroCadastro.message);
+      }
 
-        const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!cadastro?.user) {
+        throw new Error(
+          'Não foi possível confirmar a criação da conta.'
+        );
+      }
 
-        if (!emailValido.test(dados.email)) {
-            aviso.textContent = 'Informe um e-mail válido.';
-            return;
-        }
+      if (
+        cadastro.user.identities &&
+        cadastro.user.identities.length === 0
+      ) {
+        throw new Error(
+          'Este e-mail já possui uma conta. Entre em contato com a gerência.'
+        );
+      }
 
-        if (!dados.perfil) {
-            aviso.textContent = 'Selecione um perfil.';
-            return;
-        }
+      const { error: erroSolicitacao } =
+        await supabaseSolicitacao
+          .from('solicitacoes_acesso')
+          .insert({
+            nome,
+            email,
+            telefone: telefone || null,
+            perfil,
+            motivo,
+            status: 'pendente'
+          });
 
-        if (dados.motivo.length < 10) {
-            aviso.textContent = 'Explique melhor o motivo da solicitação.';
-            return;
-        }
+      if (erroSolicitacao) {
+        console.error('Erro ao registrar solicitação:', erroSolicitacao);
 
-        botaoEnviar.disabled = true;
-        botaoEnviar.innerHTML = `
-            <i class="bi bi-hourglass-split"></i>
-            Enviando...
-        `;
+        throw new Error(
+          'A conta pode ter sido criada, mas a solicitação não foi registrada. Entre em contato com a gerência antes de tentar novamente.'
+        );
+      }
 
-        aviso.textContent = 'Enviando solicitação...';
+      mostrarAviso(
+        'Solicitação enviada com sucesso! Confirme seu e-mail, se solicitado, e aguarde a aprovação do administrador.',
+        true
+      );
 
-        try {
-            if (typeof db === 'undefined') {
-                throw new Error('Supabase não inicializado.');
-            }
+      formulario.reset();
 
-            const { error } = await db
-                .from('solicitacoes_acesso')
-                .insert({
-                    nome: dados.nome,
-                    email: dados.email.toLowerCase(),
-                    telefone: dados.telefone || null,
-                    perfil: dados.perfil,
-                    motivo: dados.motivo
-                });
+    } catch (erro) {
+      console.error('Erro ao solicitar acesso:', erro);
 
-            if (error) {
-                throw error;
-            }
-            aviso.textContent =
-                'Solicitação enviada com sucesso! Aguarde a aprovação do administrador.';
-            aviso.style.color = '#0cc18c';
-            formulario.reset();
+      mostrarAviso(
+        erro.message ||
+        'Não foi possível enviar a solicitação.'
+      );
 
-        } catch (erro) {
-            console.error('Erro ao enviar solicitação:', erro);
-            aviso.textContent =
-                'Erro ao enviar solicitação. Verifique a conexão ou a configuração do Supabase.';
-            aviso.style.color = '#ff6679';
-        } finally {
-            botaoEnviar.disabled = false;
-            botaoEnviar.innerHTML = `
-                <i class="bi bi-send"></i>
-                Enviar solicitação
-            `;
-        }
-    });
+    } finally {
+      botaoEnviar.disabled = false;
+      botaoEnviar.innerHTML = textoOriginal;
+    }
+  });
 });

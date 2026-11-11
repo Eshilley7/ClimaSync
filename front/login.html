@@ -59,7 +59,6 @@
             </section>
         </main>
 
-<!-- POP-UP DE SOLICITAÇÃO DE ACESSO -->
         <dialog id="modalSolicitacao" class="modal-solicitacao">
 
             <div class="modal-topo">
@@ -106,6 +105,32 @@
                         <option value="Pesquisador Climatologista">Pesquisador Climatologista</option>
                     </select>
                 </div>
+                
+                <div class="campo-modal">
+                    <label for="solSenha">Criar senha</label>
+                    <input
+                        type="password"
+                        id="solSenha"
+                        name="senha"
+                        placeholder="Crie uma senha segura"
+                        minlength="8"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <div class="campo-modal">
+                    <label for="solConfirmarSenha">Confirmar senha</label>
+                    <input
+                        type="password"
+                        id="solConfirmarSenha"
+                        name="confirmarSenha"
+                        placeholder="Digite a senha novamente"
+                        minlength="8"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
 
                 <div class="campo-modal">
                     <label for="solMotivo">Motivo da solicitação</label>
@@ -122,12 +147,9 @@
                     <i class="bi bi-send"></i>
                     Enviar solicitação
                 </button>
-
                 <p id="avisoSolicitacao" role="status"></p>
-
             </form>
         </dialog>
-
         <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
         <script src="login.js"></script>
         <script src="solicitar-acesso.js"></script>
